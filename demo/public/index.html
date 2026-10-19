@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>RequestReplay local demo</title>
+    <style>
+      body { font: 14px/1.4 "Segoe UI", sans-serif; margin: 24px; max-width: 720px; }
+      button { margin: 0 8px 8px 0; padding: 6px 10px; }
+      pre { background: #f4f4f4; padding: 12px; overflow: auto; }
+      code { font-family: Consolas, monospace; }
+    </style>
+  </head>
+  <body>
+    <h1>RequestReplay local demo</h1>
+    <p>
+      These buttons call <code>127.0.0.1:4173</code> with dummy credentials. Open DevTools, choose the RequestReplay
+      panel, then click a button. Nothing here uses a real account.
+    </p>
+    <button id="items" type="button">GET items</button>
+    <button id="session" type="button">POST session</button>
+    <button id="missing" type="button">GET 404</button>
+    <button id="boom" type="button">GET 500</button>
+    <button id="offline" type="button">Connection refused</button>
+    <pre id="log">Ready.</pre>
+    <script src="./app.js"></script>
+  </body>
+</html>

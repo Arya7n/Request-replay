@@ -1,0 +1,12 @@
+{
+  "extends": "./.wxt/tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "verbatimModuleSyntax": false,
+    "allowImportingTsExtensions": false,
+    "types": ["chrome", "node"]
+  },
+  "include": ["entrypoints", "src", "server", "tests", "wxt.config.ts", "vitest.config.ts", ".wxt/wxt.d.ts"]
+}

@@ -1,0 +1,43 @@
+{
+  "name": "request-replay",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "icons": "node scripts/write-icons.mjs",
+    "postinstall": "wxt prepare",
+    "dev": "wxt",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit && wxt build && node scripts/verify-dist.mjs",
+    "test": "vitest run",
+    "demo": "node demo/server.mjs",
+    "api": "tsx server/src/index.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@wxt-dev/module-react": "^1.2.2",
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwindcss": "^4.3.3",
+    "wxt": "^0.21.4",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.3.5",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.5"
+  }
+}

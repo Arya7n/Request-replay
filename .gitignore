@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.output/
+.wxt/
+*.local
+.DS_Store
+tmp-chrome-profile/
+tmp-edge-profile/
+.vite/
