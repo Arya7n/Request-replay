@@ -15,7 +15,7 @@ npm run api
 
 In Chrome, open `chrome://extensions`, turn on Developer mode, and load `.output/chrome-mv3`. Open DevTools on a page and choose RequestReplay, then reload that page. `npm run demo` serves `http://127.0.0.1:4173` with dummy credentials so you can see redaction. The redacted curl should get 401. Showing sensitive values and copying again should get 200.
 
-`npm run api` listens on `http://127.0.0.1:3000`. If it is down, inspection and curl still work, and comparison runs in the panel with a note. `PORT` and `ALLOWED_ORIGIN` override the defaults. The allowed origin is this extension's id.
+`npm run api` listens on port 3000, including `http://127.0.0.1:3000`. If it is down, inspection and curl still work, and comparison runs in the panel with a note. The server accepts only this extension's origin. `PORT` changes the port. A wildcard `ALLOWED_ORIGIN` is ignored.
 
 ## Next
 

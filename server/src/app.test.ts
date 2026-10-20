@@ -28,6 +28,47 @@ describe('compare API', () => {
     }
   });
 
+  it('reports a status change and a changed JSON field', async () => {
+    const server = await listen();
+    try {
+      const compared = await fetch(`${server.url}/api/compare`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Origin: EXTENSION_ORIGIN },
+        body: JSON.stringify({
+          left: body('{"user":"ada"}', 200),
+          right: body('{"user":"grace"}', 500),
+        }),
+      });
+      expect(compared.status).toBe(200);
+      const payload = (await compared.json()) as {
+        status: { same: boolean; left: number; right: number };
+        body: { kind: string; changes: Array<{ path: string; kind: string }> };
+      };
+      expect(payload.status).toMatchObject({ same: false, left: 200, right: 500 });
+      expect(payload.body.kind).toBe('json');
+      expect(payload.body.changes).toEqual([
+        expect.objectContaining({ path: '$.user', kind: 'changed' }),
+      ]);
+    } finally {
+      await server.close();
+    }
+  });
+
+  it('refuses an origin other than the extension', async () => {
+    const server = await listen();
+    try {
+      const refused = await fetch(`${server.url}/api/compare`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Origin: 'https://example.test' },
+        body: JSON.stringify({ left: body('{}', 200), right: body('{}', 200) }),
+      });
+      expect(refused.status).toBe(403);
+      expect(refused.headers.get('access-control-allow-origin')).not.toBe('*');
+    } finally {
+      await server.close();
+    }
+  });
+
   it('rejects a malformed payload and an oversized payload', async () => {
     const server = await listen();
     try {

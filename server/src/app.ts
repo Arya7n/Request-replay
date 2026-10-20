@@ -7,6 +7,14 @@ import { compareRequestSchema } from './schema';
 export function createApp(allowedOrigin: string) {
   const app = express();
   app.disable('x-powered-by');
+  app.use((req, res, next) => {
+    const origin = req.header('origin');
+    if (origin && origin !== allowedOrigin) {
+      res.status(403).json({ error: 'This origin is not allowed.' });
+      return;
+    }
+    next();
+  });
   app.use(
     cors({
       origin: allowedOrigin,

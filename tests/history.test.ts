@@ -56,6 +56,19 @@ describe('history limits and storage errors', () => {
     expect(stored.requestHeaders[0]?.value).toBe('<redacted>');
   });
 
+  it('redacts secrets that were already sitting in stored history', () => {
+    const parsed = parseHistory({
+      version: 1,
+      requests: [
+        makeRequest({
+          requestHeaders: [{ name: 'Cookie', value: 'session=dummy-session-value' }],
+        }),
+      ],
+    });
+    expect(JSON.stringify(parsed.requests)).not.toContain('dummy-session-value');
+    expect(parsed.requests[0]?.requestHeaders[0]?.value).toBe('<redacted>');
+  });
+
   it('round-trips valid history and discards malformed entries', () => {
     const store = new MemoryStore();
     const request = makeRequest({ id: 'kept', requestHeaders: [{ name: 'Accept', value: 'text/plain' }] });

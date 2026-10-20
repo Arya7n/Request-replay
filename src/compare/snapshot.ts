@@ -12,7 +12,7 @@ export function snapshotFromRequest(request: CapturedRequest): CompareSnapshot {
     value: isSensitiveName(header.name) ? '<redacted>' : header.value.slice(0, 4_000),
   }));
   let body: string | null = null;
-  if (request.responseBody.availability === 'available' && request.responseBody.text) {
+  if (request.responseBody.availability === 'available' && request.responseBody.text !== null) {
     const redacted = redactBody(request.responseBody.text, request.responseBody.mimeType, false);
     body = redacted.text.slice(0, MAX_BODY);
   }

@@ -14,7 +14,12 @@ const permissions = manifest.permissions ?? [];
 if (permissions.length !== 1 || permissions[0] !== 'storage') {
   failures.push(`unexpected permissions: ${permissions.join(', ')}`);
 }
-for (const forbidden of ['host_permissions', 'content_scripts', 'web_accessible_resources']) {
+const hosts = manifest.host_permissions ?? [];
+const allowedHosts = new Set(['http://127.0.0.1/*', 'http://localhost/*']);
+if (hosts.length !== allowedHosts.size || hosts.some((host) => !allowedHosts.has(host))) {
+  failures.push(`host access must stay on loopback: ${hosts.join(', ') || 'none'}`);
+}
+for (const forbidden of ['content_scripts', 'web_accessible_resources']) {
   if (manifest[forbidden]) failures.push(`manifest should not include ${forbidden}`);
 }
 

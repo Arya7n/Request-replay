@@ -52,7 +52,7 @@ export function parseHistory(value: unknown): { requests: CapturedRequest[]; dis
   let discarded = 0;
   for (const item of value.requests) {
     const parsed = parseRequest(item);
-    if (parsed) requests.push(parsed);
+    if (parsed) requests.push(redactForStorage(parsed));
     else discarded += 1;
   }
   return { requests, discarded };

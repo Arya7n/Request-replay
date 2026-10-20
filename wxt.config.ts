@@ -21,6 +21,8 @@ export default defineConfig({
     description: 'Inspect DevTools requests, redact secrets, copy curl, and compare responses.',
     minimum_chrome_version: '116',
     permissions: ['storage'],
+    // Loopback only. Chrome blocks the panel from calling the local API without this.
+    host_permissions: ['http://127.0.0.1/*', 'http://localhost/*'],
     icons: {
       16: 'icons/icon16.png',
       48: 'icons/icon48.png',
